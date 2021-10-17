@@ -66,7 +66,7 @@ function App() {
             </Button>
             <input
               style={{
-                width: "1rem",
+                width: "2rem",
                 margin: "0 0.5rem",
                 padding: "5px 0.7rem",
                 border: "1px solid #1976D2",
@@ -110,17 +110,31 @@ function App() {
           </TableHead>
 
           <TableBody>
-            <TableRow>
-              <TableCell>{item.name}</TableCell>
-              <TableCell>{item.quantity}</TableCell>
-              <TableCell>{item.price.toFixed(2)}</TableCell>
-            </TableRow>
+            {products.map((product) => (
+              <TableRow key={product.name}>
+                <TableCell>{product.name}</TableCell>
+                <TableCell>{product.quantity}</TableCell>
+                <TableCell>
+                  {(product.price * product.quantity).toFixed(2)}
+                </TableCell>
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
       </TableContainer>
 
-      <Typography> Total:</Typography>
-      <Typography>You saved:</Typography>
+      <Typography variant="h5">
+        {" "}
+        Total:{" "}
+        {products
+          .reduce(
+            (acc, currentValue) =>
+              acc + currentValue.price * currentValue.quantity,
+            0
+          )
+          .toFixed(2)}{" "}
+      </Typography>
+      <Typography variant="h5">You saved:</Typography>
     </Container>
   );
 }
