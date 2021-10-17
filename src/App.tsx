@@ -14,8 +14,28 @@ import {
   Typography,
 } from "@mui/material";
 
+interface Product {
+  name: string;
+  quantity: number;
+  price: number;
+}
+
 function App() {
-  const [quantity, setQuantity] = useState<number>(0);
+  const defaultProducts: Product[] = [
+    { name: "Milk", quantity: 0, price: 3.97 },
+    { name: "Bread", quantity: 0, price: 2.17 },
+    { name: "Banana", quantity: 0, price: 0.99 },
+    { name: "Apple", quantity: 0, price: 0.89 },
+  ];
+
+  const [products, setProducts] = useState<Product[]>(defaultProducts);
+
+  // Delete after testing
+  const item: Product = {
+    name: "Milk",
+    quantity: 1,
+    price: 5,
+  };
 
   return (
     <Container maxWidth="sm">
@@ -23,38 +43,62 @@ function App() {
       <Typography variant="h4">Available Products</Typography>
 
       <List>
-        <ListItem>
-          <label>
-            Milk{" "}
+        {products.map((product, index) => (
+          <ListItem key={product.name}>
+            <label style={{ minWidth: "4rem" }}>{product.name}</label>
             <Button
               variant="outlined"
               size="small"
               onClick={() => {
-                if (quantity < 1) {
+                if (product.quantity < 1) {
                   return;
                 }
-                setQuantity(quantity - 1);
+
+                const updatedProducts = [...products];
+                updatedProducts[index] = {
+                  ...product,
+                  quantity: product.quantity - 1,
+                };
+                setProducts([...updatedProducts]);
               }}
             >
               -
             </Button>
-            <input type="number" name="" value={quantity} />
+            <input
+              style={{
+                width: "1rem",
+                margin: "0 0.5rem",
+                padding: "5px 0.7rem",
+                border: "1px solid #1976D2",
+                borderRadius: "4px",
+              }}
+              type="number"
+              name=""
+              readOnly
+              value={product.quantity}
+            />
             <Button
               variant="outlined"
               size="small"
-              onClick={() => setQuantity(quantity + 1)}
+              onClick={() => {
+                const updatedProducts = [...products];
+                updatedProducts[index] = {
+                  ...product,
+                  quantity: product.quantity + 1,
+                };
+                setProducts([...updatedProducts]);
+              }}
             >
               +
             </Button>
-          </label>
-        </ListItem>
-        <ListItem>Apple</ListItem>
-        <ListItem>Banana</ListItem>
+          </ListItem>
+        ))}
       </List>
 
       <Typography variant="h4" bottom={"bottom"}>
         Summary
       </Typography>
+
       <TableContainer>
         <Table>
           <TableHead>
@@ -67,9 +111,9 @@ function App() {
 
           <TableBody>
             <TableRow>
-              <TableCell>Milk</TableCell>
-              <TableCell>2</TableCell>
-              <TableCell>$5.00</TableCell>
+              <TableCell>{item.name}</TableCell>
+              <TableCell>{item.quantity}</TableCell>
+              <TableCell>{item.price.toFixed(2)}</TableCell>
             </TableRow>
           </TableBody>
         </Table>
