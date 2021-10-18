@@ -13,6 +13,24 @@ import {
 import Product from "./interfaces/Product";
 import ProductsList from "./components/ProductList/ProductsList";
 
+const salePrices = {
+  milk: {
+    saleQuantity: 2,
+    salePrice: 5,
+  },
+};
+
+const applySale = (product: Product): string => {
+  if (product.quantity >= salePrices.milk.saleQuantity) {
+    return (
+      salePrices.milk.salePrice *
+        Math.floor(product.quantity / salePrices.milk.saleQuantity) +
+      product.price * (product.quantity % salePrices.milk.saleQuantity)
+    ).toFixed(2);
+  }
+  return (product.price * product.quantity).toFixed(2);
+};
+
 function App() {
   const defaultProducts: Product[] = [
     { name: "Milk", quantity: 0, price: 3.97 },
@@ -49,9 +67,7 @@ function App() {
               <TableRow key={product.name}>
                 <TableCell>{product.name}</TableCell>
                 <TableCell>{product.quantity}</TableCell>
-                <TableCell>
-                  {(product.price * product.quantity).toFixed(2)}
-                </TableCell>
+                <TableCell>{applySale(product)}</TableCell>
               </TableRow>
             ))}
           </TableBody>
