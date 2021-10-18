@@ -1,10 +1,7 @@
 import React, { useState } from "react";
 
 import {
-  Button,
   Container,
-  List,
-  ListItem,
   Table,
   TableBody,
   TableCell,
@@ -13,12 +10,8 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-
-interface Product {
-  name: string;
-  quantity: number;
-  price: number;
-}
+import Product from "./interfaces/Product";
+import ProductsList from "./components/ProductList/ProductsList";
 
 function App() {
   const defaultProducts: Product[] = [
@@ -42,58 +35,7 @@ function App() {
       <Typography variant="h2">Grocery Store</Typography>
       <Typography variant="h4">Available Products</Typography>
 
-      <List>
-        {products.map((product, index) => (
-          <ListItem key={product.name}>
-            <label style={{ minWidth: "4rem" }}>{product.name}</label>
-            <Button
-              variant="outlined"
-              size="small"
-              onClick={() => {
-                if (product.quantity < 1) {
-                  return;
-                }
-
-                const updatedProducts = [...products];
-                updatedProducts[index] = {
-                  ...product,
-                  quantity: product.quantity - 1,
-                };
-                setProducts([...updatedProducts]);
-              }}
-            >
-              -
-            </Button>
-            <input
-              style={{
-                width: "2rem",
-                margin: "0 0.5rem",
-                padding: "5px 0.7rem",
-                border: "1px solid #1976D2",
-                borderRadius: "4px",
-              }}
-              type="number"
-              name=""
-              readOnly
-              value={product.quantity}
-            />
-            <Button
-              variant="outlined"
-              size="small"
-              onClick={() => {
-                const updatedProducts = [...products];
-                updatedProducts[index] = {
-                  ...product,
-                  quantity: product.quantity + 1,
-                };
-                setProducts([...updatedProducts]);
-              }}
-            >
-              +
-            </Button>
-          </ListItem>
-        ))}
-      </List>
+      <ProductsList products={products} setProducts={setProducts} />
 
       <Typography variant="h4" bottom={"bottom"}>
         Summary
