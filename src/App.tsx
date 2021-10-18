@@ -23,13 +23,6 @@ function App() {
 
   const [products, setProducts] = useState<Product[]>(defaultProducts);
 
-  // Delete after testing
-  const item: Product = {
-    name: "Milk",
-    quantity: 1,
-    price: 5,
-  };
-
   return (
     <Container maxWidth="sm">
       <Typography variant="h2">Grocery Store</Typography>
