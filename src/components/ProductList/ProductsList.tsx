@@ -9,6 +9,26 @@ interface ProductsListProps {
 }
 
 const ProductsList = ({ products, setProducts }: ProductsListProps) => {
+  const addProduct = (product: Product, index: number) => {
+    const updatedProducts = [...products];
+    updatedProducts[index] = {
+      ...product,
+      quantity: product.quantity + 1,
+    };
+    setProducts([...updatedProducts]);
+  };
+
+  const removeProduct = (product: Product, index: number) => {
+    if (product.quantity >= 1) {
+      const updatedProducts = [...products];
+      updatedProducts[index] = {
+        ...product,
+        quantity: product.quantity - 1,
+      };
+      setProducts([...updatedProducts]);
+    }
+  };
+
   return (
     <List>
       {products.map((product, index) => (
@@ -17,18 +37,7 @@ const ProductsList = ({ products, setProducts }: ProductsListProps) => {
           <Button
             variant="outlined"
             size="small"
-            onClick={() => {
-              if (product.quantity < 1) {
-                return;
-              }
-
-              const updatedProducts = [...products];
-              updatedProducts[index] = {
-                ...product,
-                quantity: product.quantity - 1,
-              };
-              setProducts([...updatedProducts]);
-            }}
+            onClick={() => removeProduct(product, index)}
           >
             -
           </Button>
@@ -48,14 +57,7 @@ const ProductsList = ({ products, setProducts }: ProductsListProps) => {
           <Button
             variant="outlined"
             size="small"
-            onClick={() => {
-              const updatedProducts = [...products];
-              updatedProducts[index] = {
-                ...product,
-                quantity: product.quantity + 1,
-              };
-              setProducts([...updatedProducts]);
-            }}
+            onClick={() => addProduct(product, index)}
           >
             +
           </Button>
