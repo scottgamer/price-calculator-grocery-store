@@ -13,19 +13,15 @@ import {
 import Product from "./interfaces/Product";
 import ProductsList from "./components/ProductList/ProductsList";
 
-const salePrices = {
-  milk: {
-    saleQuantity: 2,
-    salePrice: 5,
-  },
-};
-
 const applySale = (product: Product): string => {
-  if (product.quantity >= salePrices.milk.saleQuantity) {
+  if (
+    product.saleQuantity &&
+    product.salePrice &&
+    product.quantity >= product.saleQuantity
+  ) {
     return (
-      salePrices.milk.salePrice *
-        Math.floor(product.quantity / salePrices.milk.saleQuantity) +
-      product.price * (product.quantity % salePrices.milk.saleQuantity)
+      product.salePrice * Math.floor(product.quantity / product.saleQuantity) +
+      product.price * (product.quantity % product.saleQuantity)
     ).toFixed(2);
   }
   return (product.price * product.quantity).toFixed(2);
@@ -33,8 +29,8 @@ const applySale = (product: Product): string => {
 
 function App() {
   const defaultProducts: Product[] = [
-    { name: "Milk", quantity: 0, price: 3.97 },
-    { name: "Bread", quantity: 0, price: 2.17 },
+    { name: "Milk", quantity: 0, price: 3.97, saleQuantity: 2, salePrice: 5 },
+    { name: "Bread", quantity: 0, price: 2.17, saleQuantity: 3, salePrice: 6 },
     { name: "Banana", quantity: 0, price: 0.99 },
     { name: "Apple", quantity: 0, price: 0.89 },
   ];
