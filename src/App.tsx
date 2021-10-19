@@ -13,7 +13,7 @@ import {
 import Product from "./interfaces/Product";
 import ProductsList from "./components/ProductList/ProductsList";
 
-const applySale = (product: Product) => {
+const applySale = (product: Product): number => {
   if (
     product.saleQuantity &&
     product.salePrice &&
@@ -27,13 +27,13 @@ const applySale = (product: Product) => {
   return product.price * product.quantity;
 };
 
-const calculateTotal = (products: Product[]) =>
+const calculateTotal = (products: Product[]): number =>
   products.reduce(
     (acc, currentValue) => acc + currentValue.price * currentValue.quantity,
     0
   );
 
-const calculateTotalAfterSale = (products: Product[]) =>
+const calculateTotalAfterSale = (products: Product[]): number =>
   products.reduce((acc, currentValue) => acc + applySale(currentValue), 0);
 
 function App() {
@@ -45,6 +45,9 @@ function App() {
   ];
 
   const [products, setProducts] = useState<Product[]>(defaultProducts);
+
+  const totalAfterSale = calculateTotalAfterSale(products);
+  const total = calculateTotal(products);
 
   return (
     <Container maxWidth="sm">
@@ -81,13 +84,10 @@ function App() {
 
       <Typography variant="h5">
         {" "}
-        Total: ${calculateTotalAfterSale(products).toFixed(2)}{" "}
+        Total: ${totalAfterSale.toFixed(2)}{" "}
       </Typography>
       <Typography variant="h5">
-        You saved: $
-        {(calculateTotal(products) - calculateTotalAfterSale(products)).toFixed(
-          2
-        )}
+        You saved: ${(total - totalAfterSale).toFixed(2)}
       </Typography>
     </Container>
   );
