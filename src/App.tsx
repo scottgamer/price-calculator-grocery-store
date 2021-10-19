@@ -13,7 +13,7 @@ import {
 import Product from "./interfaces/Product";
 import ProductsList from "./components/ProductList/ProductsList";
 
-const applySale = (product: Product): string => {
+const applySale = (product: Product) => {
   if (
     product.saleQuantity &&
     product.salePrice &&
@@ -22,10 +22,19 @@ const applySale = (product: Product): string => {
     return (
       product.salePrice * Math.floor(product.quantity / product.saleQuantity) +
       product.price * (product.quantity % product.saleQuantity)
-    ).toFixed(2);
+    );
   }
-  return (product.price * product.quantity).toFixed(2);
+  return product.price * product.quantity;
 };
+
+const calculateTotal = (products: Product[]) =>
+  products.reduce(
+    (acc, currentValue) => acc + currentValue.price * currentValue.quantity,
+    0
+  );
+
+const calculateTotalAfterSale = (products: Product[]) =>
+  products.reduce((acc, currentValue) => acc + applySale(currentValue), 0);
 
 function App() {
   const defaultProducts: Product[] = [
@@ -63,7 +72,7 @@ function App() {
               <TableRow key={product.name}>
                 <TableCell>{product.name}</TableCell>
                 <TableCell>{product.quantity}</TableCell>
-                <TableCell>{applySale(product)}</TableCell>
+                <TableCell>${applySale(product).toFixed(2)}</TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -72,16 +81,14 @@ function App() {
 
       <Typography variant="h5">
         {" "}
-        Total:{" "}
-        {products
-          .reduce(
-            (acc, currentValue) =>
-              acc + currentValue.price * currentValue.quantity,
-            0
-          )
-          .toFixed(2)}{" "}
+        Total: ${calculateTotalAfterSale(products).toFixed(2)}{" "}
       </Typography>
-      <Typography variant="h5">You saved:</Typography>
+      <Typography variant="h5">
+        You saved: $
+        {(calculateTotal(products) - calculateTotalAfterSale(products)).toFixed(
+          2
+        )}
+      </Typography>
     </Container>
   );
 }
