@@ -50,7 +50,7 @@ const ProductsList = ({ products, setProducts }: ProductsListProps) => {
               borderRadius: "4px",
             }}
             type="number"
-            name=""
+            name="quantity"
             readOnly
             value={product.quantity}
           />
