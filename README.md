@@ -1,46 +1,42 @@
-# Getting Started with Create React App
+# Exercise 2: Price Calculator for a local grocery store
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+At the local grocery store items are sold by quantity. For example Milk costs $3.97.
+However sometimes there is a sale and then consumers can buy `n` items for the price of one.
 
-## Available Scripts
+This week the pricing table at the local grocery store looks like this:
 
-In the project directory, you can run:
+```
+Item     Unit price        Sale price
+--------------------------------------
+Milk      $3.97            2 for $5.00
+Bread     $2.17            3 for $6.00
+Banana    $0.99
+Apple     $0.89
+```
 
-### `npm start`
+At the cash counter the items are accepted in any order. So at the cash counter the order of items can be in the order of Bread, Banana, Milk, Apple, Bread and then Milk. Notice that quantity of the Milk is 2 and this week there is a sale on milk if 2 bottles of milk are purchased. So the price applied for milk should be $5.00.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Also note that if the user buys three bottles of milk then for the first two bottles of milk the user should get the sale price and on the third bottle of milk the user should get the unit price.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### Task
 
-### `npm test`
+The task is to build a program which when executed would ask the user to list all the items purchased in any order. Once the user has listed all the items, print the total cost. You need to build a solution for the given items and you do not need to worry about items which would be added in future.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Example in ruby:
 
-### `npm run build`
+```
+$ ruby price_calculator.rb
+Please enter all the items purchased separated by a comma
+milk,milk, bread,banana,bread,bread,bread,milk,apple
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Item     Quantity      Price
+--------------------------------------
+Milk      3            $8.97
+Bread     4            $8.17
+Apple     1            $0.89
+Banana    1            $0.99
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Total price : $19.02
+You saved $3.45 today.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+```
