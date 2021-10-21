@@ -46,3 +46,5 @@ You saved $3.45 today.
 You can run the project locally with `npm install` then `npm start`
 
 You can run the tests with `npm test`
+
+The app will run in `localhost:3000`
