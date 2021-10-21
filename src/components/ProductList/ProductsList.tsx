@@ -33,11 +33,17 @@ const ProductsList = ({ products, setProducts }: ProductsListProps) => {
     <List>
       {products.map((product, index) => (
         <ListItem key={product.name}>
-          <label style={{ minWidth: "4rem" }}>{product.name}</label>
+          <label
+            style={{ minWidth: "4rem" }}
+            htmlFor={`${product.name}-quantity`}
+          >
+            {product.name}
+          </label>
           <Button
             variant="outlined"
             size="small"
             onClick={() => removeProduct(product, index)}
+            title={`${product.name}-remove`}
           >
             -
           </Button>
@@ -50,7 +56,8 @@ const ProductsList = ({ products, setProducts }: ProductsListProps) => {
               borderRadius: "4px",
             }}
             type="number"
-            name="quantity"
+            name={`${product.name}-quantity`}
+            id={`${product.name}-quantity`}
             readOnly
             value={product.quantity}
           />
@@ -58,6 +65,7 @@ const ProductsList = ({ products, setProducts }: ProductsListProps) => {
             variant="outlined"
             size="small"
             onClick={() => addProduct(product, index)}
+            title={`${product.name}-add`}
           >
             +
           </Button>
