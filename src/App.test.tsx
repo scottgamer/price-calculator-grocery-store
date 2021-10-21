@@ -1,6 +1,7 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import App from "./App";
+import userEvent from "@testing-library/user-event";
 
 describe("App component", () => {
   test("renders the App component", () => {
@@ -22,5 +23,28 @@ describe("App component", () => {
     expect(breadLabel).toHaveValue(0);
     expect(bananaLabel).toHaveValue(0);
     expect(appleLabel).toHaveValue(0);
+  });
+
+  test("increase item count when the + sign is pressed", () => {
+    render(<App />);
+    const milkLabel = screen.getByLabelText(/Milk/i);
+    const addMilkButton = screen.getByRole("button", { name: /milk-add/i });
+    userEvent.click(addMilkButton);
+    expect(milkLabel).toHaveValue(1);
+  });
+
+  test("decrease item count when the - sign is pressed", () => {
+    render(<App />);
+    const milkLabel = screen.getByLabelText(/Milk/i);
+    const addMilkButton = screen.getByRole("button", {
+      name: /milk-add/i,
+    });
+    const removeMilkButton = screen.getByRole("button", {
+      name: /milk-remove/i,
+    });
+    userEvent.dblClick(addMilkButton);
+
+    userEvent.click(removeMilkButton);
+    expect(milkLabel).toHaveValue(1);
   });
 });
