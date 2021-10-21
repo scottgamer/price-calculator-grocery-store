@@ -40,3 +40,9 @@ Total price : $19.02
 You saved $3.45 today.
 
 ```
+
+## Running the project locally
+
+You can run the project locally with `npm install` then `npm start`
+
+You can run the tests with `npm test`
